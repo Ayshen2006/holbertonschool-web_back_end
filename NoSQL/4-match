@@ -1,2 +1,4 @@
 // my comment
-db.school.find()
+db.school.find({
+    name: "Holberton school"
+});
