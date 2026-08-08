@@ -2,7 +2,7 @@ import readDatabase from '../utils';
 
 class StudentsController {
   static async getAllStudents(request, response) {
-    const database = process.argv[2];
+    const database = process.argv[process.argv.length - 1];
 
     try {
       const students = await readDatabase(database);
