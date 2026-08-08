@@ -17,7 +17,7 @@ function countStudents(path) {
   const fields = {};
 
   students.forEach((student) => {
-    const [firstname, lastname, age, field] = student.split(',');
+    const [firstname, , , field] = student.split(',');
 
     if (!fields[field]) {
       fields[field] = [];
