@@ -7,6 +7,8 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!\n');
   } else if (req.url === '/students') {
+    res.write('This is the list of our students\n');
+
     const database = process.argv[2];
 
     fs.readFile(database, 'utf-8', (error, data) => {
@@ -18,8 +20,7 @@ const app = http.createServer((req, res) => {
       const lines = data.split('\n').filter((line) => line.trim() !== '');
       const students = lines.slice(1);
 
-      let output = 'This is the list of our students\n';
-      output += `Number of students: ${students.length}\n`;
+      res.write(`Number of students: ${students.length}\n`);
 
       const fields = {};
 
@@ -34,10 +35,12 @@ const app = http.createServer((req, res) => {
       });
 
       Object.keys(fields).forEach((field) => {
-        output += `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}\n`;
+        res.write(
+          `Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}\n`,
+        );
       });
 
-      res.end(output);
+      res.end();
     });
   }
 });
