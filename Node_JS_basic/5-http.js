@@ -2,18 +2,14 @@ const http = require('http');
 const fs = require('fs');
 
 const app = http.createServer((req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
-
   if (req.url === '/') {
-    res.end('Hello Holberton School!\n');
+    res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     res.write('This is the list of our students\n');
 
-    const database = process.argv[2];
-
-    fs.readFile(database, 'utf-8', (error, data) => {
+    fs.readFile(process.argv[2], 'utf8', (error, data) => {
       if (error) {
-        res.end('Cannot load the database\n');
+        res.end('Cannot load the database');
         return;
       }
 
@@ -25,7 +21,9 @@ const app = http.createServer((req, res) => {
       const fields = {};
 
       students.forEach((student) => {
-        const [firstname, , , field] = student.split(',');
+        const values = student.split(',');
+        const firstname = values[0];
+        const field = values[3];
 
         if (!fields[field]) {
           fields[field] = [];
@@ -42,6 +40,8 @@ const app = http.createServer((req, res) => {
 
       res.end();
     });
+  } else {
+    res.end('Hello Holberton School!');
   }
 });
 
